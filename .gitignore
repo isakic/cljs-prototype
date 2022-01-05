@@ -1,5 +1,7 @@
 node_modules/
-public/
+
+public/*
+!public/index.html
 
 /target
 /checkouts
@@ -17,3 +19,4 @@ pom.xml.asc
 .DS_Store
 .lsp/
 .clj-kondo/
+

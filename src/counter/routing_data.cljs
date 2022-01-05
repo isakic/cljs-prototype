@@ -54,7 +54,12 @@
        (filter #(= (str (:station-id %)) (str station-id)))
        first))
 
-(defn get-platforms-in-same-direction [data platform]
+; TODO - this fn should throw if the platform doesn't exist. 
+(defn get-platforms-in-same-direction 
+    "Returns a collection of ordered line platforms in the same direction as the given platform. 
+     The collection always contains the given platform.
+     Returns empty collection if the given platform doesn't exist."
+  [data platform]
   (->> data
        :platforms
        vals
