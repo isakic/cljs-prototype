@@ -5,10 +5,8 @@
    [cljs-http.client :as http]
    [cljs.core.async :refer [<!]]
    [clojure.string :as string]
-   [counter.util :refer [coll->hashmap-by =by not=by distinct-by fn-compiler]]
-   [counter.csv :refer [parse-csv]]
-   [react :as react]
-   [reagent.core :as r]))
+   [counter.util :refer [coll->hashmap-by =by not=by distinct-by create-context]]
+   [counter.csv :refer [parse-csv]]))
 
 (def station-data-url "https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv")
 
@@ -124,8 +122,6 @@
          (coll->hashmap-by lines :id)
          (coll->hashmap-by platforms :id)))))
 
-(defonce routing-data-context (react/createContext nil))
-
-(defn routing-data-provider [value-holder & children]
-  (r/create-element (.-Provider routing-data-context) #js{:value (:value value-holder)}
-                    (r/as-element (map-indexed #(with-meta %2 {:key %1}) children) fn-compiler)))
+(defonce context-and-provider (create-context nil))
+(defonce routing-data-context (first context-and-provider))
+(defonce routing-data-provider (last context-and-provider))

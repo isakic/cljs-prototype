@@ -1,5 +1,19 @@
-(ns counter.util 
-  (:require [reagent.core :as r]))
+(ns counter.util
+  (:require [reagent.core :as r]
+            [react :as react]))
+
+(defonce fn-compiler (r/create-compiler {:function-components true}))
+
+(defn- create-provider [context]
+  (fn routing-data-provider [value-holder & children]
+    (r/create-element (.-Provider context) #js{:value (:value value-holder)}
+                      (r/as-element (map-indexed #(with-meta %2 {:key %1}) children) fn-compiler))))
+
+(defn create-context [default-value]
+  (let [context (react/createContext default-value)]
+    [context
+     (create-provider context)]))
+
 
 (defn coll->hashmap-by [coll key-fn] (zipmap (map key-fn coll) coll))
 
@@ -26,9 +40,11 @@
   ([f xs]
    (sequence (distinct-by f) xs)))
 
+(defn with-keys
+  "Adds keys to component metadata so reagent wouldn't complain when passing children to components."
+  [children]
+  (map-indexed #(with-meta %2  {:key %1}) children))
 
-(defn row [& children] 
-  [:div {:class "flex flex-row gap-2 justify-between"} 
-    (map-indexed #(with-meta %2  {:key %1}) children)])
-
-(defonce fn-compiler (r/create-compiler {:function-components true}))
+(defn row [& children]
+  [:div {:class "flex flex-row gap-2 justify-between"}
+   (with-keys children)])
