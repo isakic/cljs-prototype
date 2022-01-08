@@ -1,4 +1,4 @@
-(ns counter.platform-navigator 
+(ns counter.platform-navigator
   (:require [counter.routing-data :as routing-data :refer [routing-data-context]]
             [counter.line-picker :refer [line-picker]]
             [counter.util :refer [row]]
@@ -14,12 +14,15 @@
      [line-picker data platform set-platform]
      [row
       [:button {:class "bg-blue-500 hover:bg-blue-700 text-white w-32 py-2 px-4 rounded-lg"
-                :on-click #(set-platform prev)} "Previous"]
+                :on-click #(set-platform prev)}
+       "Previous"]
       [:label {:class "py-2"} (:name curr-station)]
       [:button {:class "bg-blue-500 hover:bg-blue-700 text-white w-32 py-2 px-4 rounded-lg"
-                :on-click #(set-platform next)} "Next"]]
+                :on-click #(set-platform next)}
+       "Next"]]
      [row
       [:label {:class "py-2"} (str "Destination: " (:name dest-station))]
       [:button {:class "bg-blue-500 hover:bg-blue-700 text-white w-32 py-2 px-4 rounded-lg"
-                :disabled (nil? retn) 
-                :on-click #(set-platform retn)} "Reverse"]]]))
+                :disabled (nil? retn)
+                :on-click #(set-platform retn)}
+       "Reverse"]]]))

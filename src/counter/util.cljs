@@ -14,7 +14,6 @@
     [context
      (create-provider context)]))
 
-
 (defn coll->hashmap-by [coll key-fn] (zipmap (map key-fn coll) coll))
 
 (defn =by [fn x y] (= (fn x) (fn y)))
@@ -48,3 +47,7 @@
 (defn row [& children]
   [:div {:class "flex flex-row gap-2 justify-between"}
    (with-keys children)])
+
+(defonce nav-context-and-provider (create-context nil))
+(defonce nav-context (first nav-context-and-provider))
+(defonce nav-provider (last nav-context-and-provider))
