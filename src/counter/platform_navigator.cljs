@@ -1,10 +1,12 @@
 (ns counter.platform-navigator 
-  (:require [counter.routing-data :as routing-data]
+  (:require [counter.routing-data :as routing-data :refer [routing-data-context]]
             [counter.line-picker :refer [line-picker]]
-            [counter.util :refer [row]]))
+            [counter.util :refer [row]]
+            [react :as react]))
 
-(defn platform-navigator [data platform set-platform]
-  (let [[prev _ next] (routing-data/get-platforms data platform)
+(defn platform-navigator [platform set-platform]
+  (let [data (react/useContext routing-data-context)
+        [prev _ next] (routing-data/get-platforms data platform)
         retn (routing-data/get-reverse-platform data platform)
         curr-station (routing-data/get-station data platform)
         dest-station (routing-data/get-last-station data platform)]

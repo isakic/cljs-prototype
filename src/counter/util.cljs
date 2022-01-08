@@ -1,4 +1,5 @@
-(ns counter.util)
+(ns counter.util 
+  (:require [reagent.core :as r]))
 
 (defn coll->hashmap-by [coll key-fn] (zipmap (map key-fn coll) coll))
 
@@ -29,3 +30,5 @@
 (defn row [& children] 
   [:div {:class "flex flex-row gap-2 justify-between"} 
     (map-indexed #(with-meta %2  {:key %1}) children)])
+
+(defonce fn-compiler (r/create-compiler {:function-components true}))
