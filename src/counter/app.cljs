@@ -4,9 +4,11 @@
             [counter.routing-data :as routing-data :refer [routing-data-provider]]
             [react :as react]
             [reagent.dom :as rdom]
-            [counter.util :refer [row fn-compiler]]
+            [counter.util :refer [fn-compiler]]
             [counter.nav-container :refer [nav-container]]))
 
+(defn- loading-screen []
+  [:div {:class "grid place-items-center h-screen"} "Loading data, please wait..."])
 
 (defn app []
   (let [[data set-data] (react/useState nil)]
@@ -17,7 +19,7 @@
      [routing-data-provider {:value data}
       (if data
         [nav-container]
-        [row [:label {:class "py-2"} "Loading data, please wait..."]])]]))
+        [loading-screen])]]))
 
 (defn init []
   (rdom/render [app]

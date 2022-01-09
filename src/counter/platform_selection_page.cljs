@@ -8,11 +8,19 @@
   (let [[platform set-platform] (react/useState nil)
         go-to (react/useContext nav-context)]
     [:<>
+     [row
+      [:label {:class "grow text-center"} "New passenger count"]]
+     [:hr]
      [platform-search set-platform]
      (when platform
        [:<>
         [platform-navigator platform set-platform]
+        [:hr]
         [row
-         [:button {:class "bg-blue-500 hover:bg-blue-700 text-white w-32 py-2 px-4 rounded-lg"
+         [:button {:class "bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
                    :on-click #(go-to {:page :riding-count :params platform})}
-          "Start count"]]])]))
+          "Start riding count"]
+         [:span {:class "grow"}]
+         [:button {:class "bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+                   :on-click #()}
+          "Start station count"]]])]))
